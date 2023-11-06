@@ -58,7 +58,6 @@ public class WriterRepoImpl implements WriterRepository {
         session.beginTransaction();
         List<Writer> writerList = session.createQuery("FROM Writer").list();
         session.getTransaction().commit();
-        session.close();
         return writerList;
     }
 }

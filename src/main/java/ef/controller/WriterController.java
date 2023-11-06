@@ -26,7 +26,10 @@ public class WriterController {
 
     public Writer saveWriter(String firstName, String lastName, String name, String content) {
         List<Post> posts = new ArrayList<>();
-        posts.add(postService.savePost(new Post(content)));
+        Post post = new Post(content);
+        Region region = new Region(name);
+        Writer writer = new Writer(firstName,lastName,posts,region);
+        posts.add(postService.savePost(post));
         return writerService.saveWriter(new Writer(firstName, lastName,posts,regionService.saveRegion(new Region(name))));
     }
 

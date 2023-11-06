@@ -1,12 +1,29 @@
 package ef.model;
 
+import jakarta.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "writer", schema = "public")
 public class Writer {
+
+    @Id
+    @Column(name = "id_writer")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name="writer_id",referencedColumnName = "id_writer")
     private List<Post> posts;
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "region_id",referencedColumnName = "id_region")
     private Region region;
 
     public Long getId() {
@@ -49,7 +66,11 @@ public class Writer {
         this.region = region;
     }
 
-    public Writer() {
+    public Writer(String firstName, String lastName, List<Post> posts, Region region) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.posts = posts;
+        this.region = region;
     }
 
     public Writer(Long id, String firstName, String lastName) {
@@ -58,24 +79,7 @@ public class Writer {
         this.lastName = lastName;
     }
 
-    public Writer(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public Writer(String firstName, String lastName, List<Post> posts, Region region) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.posts = posts;
-        this.region = region;
-    }
-
-    public Writer(Long id, String firstName, String lastName, List<Post> posts, Region region) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.posts = posts;
-        this.region = region;
+    public Writer() {
     }
 
     @Override

@@ -1,11 +1,24 @@
 package ef.model;
 
+import jakarta.persistence.*;
+
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "post", schema = "public")
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_post")
     private Long id;
+
+    @Column(name = "content")
     private String content;
+
+    @Column(name = "created")
     private Long created;
+
+    @Column(name = "updated")
     private Long updated;
 
     public Long getId() {
@@ -43,22 +56,14 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, String content) {
-        this.id = id;
-        this.content = content;
-    }
-
     public Post(String content) {
         this.content = content;
     }
 
-    public Post(Long id, String content, Long created, Long updated) {
+    public Post(Long id, String content) {
         this.id = id;
         this.content = content;
-        this.created = created;
-        this.updated = updated;
     }
-
 
     @Override
     public String toString() {

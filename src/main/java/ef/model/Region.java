@@ -1,6 +1,17 @@
 package ef.model;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "region", schema = "public")
 public class Region {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_region")
     private Long id;
+
+    @Column(name = "name")
     private String name;
 
     public Long getId() {
