@@ -26,6 +26,7 @@
     </build>
 
     <properties>
+        <flyway-maven-plugin>10.0.0</flyway-maven-plugin>
         <flyway-core.vesion>9.22.3</flyway-core.vesion>
         <postgresql.version>42.6.0</postgresql.version>
         <hibernate-core.version>6.3.1.Final</hibernate-core.version>
@@ -45,7 +46,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-maven-plugin</artifactId>
-            <version>10.0.0</version>
+            <version>${flyway-maven-plugin}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>

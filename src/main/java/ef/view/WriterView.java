@@ -21,7 +21,6 @@ public class WriterView {
             if (writerController.getWriterByID((long) number).getId() == null) {
                 throw new NullPointerException();
             } else {
-                writerController.deleteWriterByID((long) number);
                 System.out.println(writerController.getWriterByID((long) number));
             }
         } catch (InputMismatchException e) {

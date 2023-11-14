@@ -11,48 +11,50 @@ public class RegionRepoImpl implements RegionRepository {
 
     @Override
     public Region save(Region region) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(region);
-        session.getTransaction().commit();
-        return region;
+        try (Session session = HibernateUtil.getSession()) {
+            session.beginTransaction();
+            Region createdRegion = session.merge(region);
+            session.getTransaction().commit();
+            return createdRegion;
+        }
     }
 
     @Override
-    public Region getById(Long aLong) {
-        Region region = HibernateUtil.getSessionFactory().openSession().load(Region.class, aLong);
-        return region;
+    public Region getById(Long id) {
+        try (Session session = HibernateUtil.getSession()) {
+            return session.get(Region.class, id);
+        }
     }
 
     @Override
     public Region update(Region region) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(region);
-        session.getTransaction().commit();
-        session.close();
-        return region;
+        try (Session session = HibernateUtil.getSession()) {
+            session.beginTransaction();
+            Region updatedRegion = session.merge(region);
+            session.getTransaction().commit();
+            return updatedRegion;
+        }
     }
 
     @Override
-    public void deleteById(Long aLong) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Region region = new Region();
-        region.setId(aLong);
-        session.delete(region);
-        session.getTransaction().commit();
-        session.close();
+    public void deleteById(Long id) {
+        try (Session session = HibernateUtil.getSession()) {
+            session.beginTransaction();
+            Region region = new Region();
+            region.setId(id);
+            session.remove(region);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
     public List<Region> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<Region> regionList = session.createQuery("FROM Region").list();
-        session.getTransaction().commit();
-        session.close();
-        return regionList;
+        try (Session session = HibernateUtil.getSession()) {
+            session.beginTransaction();
+            List<Region> regionList = session.createQuery("FROM Region",Region.class).getResultList();
+            session.getTransaction().commit();
+            return regionList;
+        }
     }
 }
 
